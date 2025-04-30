@@ -47,6 +47,8 @@ def createMeshShape(subFolder, assetName):
 
     center = (tmesh.bounds[0] + tmesh.bounds[1]) / 2
 
+    scale_matrix = trimesh.transformations.compose_matrix(scale=(0.01, 0.01, 0.01))
+    tmesh.apply_transform(scale_matrix)
     
     rotation_matrix = trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0])
     tmesh.apply_transform(rotation_matrix)

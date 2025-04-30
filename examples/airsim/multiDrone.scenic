@@ -1,5 +1,5 @@
 # NOTE: add your world info path here
-# param worldInfoPath = "[YOUR PATH HERE]"
+param worldInfoPath = "./airsimWorldInfo"
 param worldOffset = Vector(0,0,50) # blocks world offset
 
 

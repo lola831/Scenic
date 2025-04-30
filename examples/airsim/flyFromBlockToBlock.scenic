@@ -1,5 +1,5 @@
 # NOTE: add your world info path here
-# param worldInfoPath = "[YOUR PATH HERE]"
+param worldInfoPath = "./airsimWorldInfo"
 param worldOffset = Vector(0,0,50) # blocks world offset
 
 
@@ -9,7 +9,7 @@ model scenic.simulators.airsim.model
 
 
 # get the ground
-ground = getPrexistingObj("Ground")
+ground = getPrexistingObj("ground")
 
 # predefine a center area
 centerArea = RectangularRegion(Vector(0,0,30), 0, 100,100)

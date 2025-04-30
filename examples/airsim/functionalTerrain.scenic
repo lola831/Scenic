@@ -3,7 +3,7 @@ from scenic.simulators.airsim.utils import getPrexistingObj
 import random
 
 # NOTE: add your world info path here
-# param worldInfoPath = "[YOUR PATH HERE]"
+param worldInfoPath = "./airsimWorldInfo"
 
 param worldOffset = Vector(0,0,50) # blocks world offset
 param timestep = .1
@@ -12,7 +12,7 @@ model scenic.simulators.airsim.model
 
 
 
-ground = getPrexistingObj("Ground")
+ground = getPrexistingObj("ground")
 
 ego = new StaticObj on ground,
     with assetName "Cone",
