@@ -144,13 +144,18 @@ jobs:
             ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -i private_key ${USER_NAME}@${HOSTNAME} '
               cd /home/ubuntu/actions/Scenic &&
               source venv/bin/activate &&
+              # detect our Python ABI tag, e.g. cp310 for Python 3.10
+              PYTAG=$(python3 -c '\''import sys; print(f"cp{sys.version_info.major}{sys.version_info.minor}")'\'') &&
               carla_versions=($(find /software -maxdepth 1 -type d -name 'carla*')) &&
               for version in "${carla_versions[@]}"; do
                 echo "============================= CARLA $version ============================="
                 # Install the matching Python API wheel
-                cd "$version"/PythonAPI/carla/dist
-                python3 -m pip install --force-reinstall ./
-                cd /home/ubuntu/actions/Scenic
+                DIST="$version/PythonAPI/carla/dist"
+                # pick the one wheel matching our ABI
+                WHL=$(echo "$DIST"/carla-*${PYTAG}-*linux_x86_64.whl 2>/dev/null)
+                echo "Installing prebuilt wheel: $WHL"
+                python3 -m pip install --force-reinstall "$WHL"
+
                 export CARLA_ROOT="$version"
                 pytest tests/simulators/carla
               done
