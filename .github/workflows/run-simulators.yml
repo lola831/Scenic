@@ -145,7 +145,7 @@ jobs:
               cd /home/ubuntu/actions/Scenic &&
               source venv/bin/activate &&
               # detect our Python ABI tag, e.g. cp310 for Python 3.10
-              PYTAG=$(python3 -c '\''import sys; print(f"cp{sys.version_info.major}{sys.version_info.minor}")'\'') &&
+              PYTAG=$(python3 -c 'import sys; print(f"cp{sys.version_info.major}{sys.version_info.minor}")') &&
               carla_versions=($(find /software -maxdepth 1 -type d -name 'carla*')) &&
               for version in "${carla_versions[@]}"; do
                 echo "============================= CARLA $version ============================="
