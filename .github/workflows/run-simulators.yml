@@ -149,7 +149,7 @@ jobs:
                 echo "============================= CARLA $version ============================="
                 # reinstall the matching Python API wheel
                 whl=$(ls $version/PythonAPI/carla/dist/*.whl)
-                python -m pip install "$whl" --force-reinstall
+                python3 -m pip install "$whl" --force-reinstall
 
                 export CARLA_ROOT="$version"
                 pytest tests/simulators/carla
