@@ -39,8 +39,16 @@ def getCarlaSimulator(getAssetPath):
     carla_process = None
     if not isCarlaServerRunning():
         CARLA_ROOT = checkCarlaPath()
+        # choose correct launch script based on CARLA version
+        if os.path.exists(os.path.join(CARLA_ROOT, "CarlaUnreal.sh")):
+            script = "CarlaUnreal.sh"
+            binary = "CarlaUnreal-Linux-Shipping"
+        else:
+            script = "CarlaUE4.sh"
+            binary = "CarlaUE4-Linux-Shipping"
+
         carla_process = subprocess.Popen(
-            f"bash {CARLA_ROOT}/CarlaUE4.sh -RenderOffScreen", shell=True
+            f"bash {CARLA_ROOT}/{script} -RenderOffScreen", shell=True
         )
 
         for _ in range(180):
@@ -63,7 +71,7 @@ def getCarlaSimulator(getAssetPath):
     yield _getCarlaSimulator
 
     if carla_process:
-        subprocess.run("killall -9 CarlaUE4-Linux-Shipping", shell=True)
+        subprocess.run(f"killall -9 {binary}", shell=True)
 
 
 def test_throttle(getCarlaSimulator):
