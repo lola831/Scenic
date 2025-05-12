@@ -151,9 +151,10 @@ jobs:
                 export CARLA_ROOT="$version"
 
                 # install local wheel for carla0.10.0
-                if [[ "$version" == "/software/carla0.10.0"]]; then
-                  whl=$(ls $version/PythonAPI/carla/dist/*.whl)
-                  python3 -m pip install "$whl" --force-reinstall
+                if [[ "$version" == "/software/carla0.10.0" ]]; then
+                  WHL=$(ls "$version"/PythonAPI/carla/dist/*cp3*-linux_x86_64.whl)
+                  echo "Installing local wheel: $WHL"
+                  python3 -m pip install --force-reinstall "$WHL"
                 fi
 
                 pytest tests/simulators/carla
