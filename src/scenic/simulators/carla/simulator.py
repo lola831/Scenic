@@ -43,9 +43,15 @@ class CarlaSimulator(DrivingSimulator):
         verbosePrint(f"Connecting to CARLA on port {port}")
         self.client = carla.Client(address, port)
         self.client.set_timeout(timeout)  # limits networking operations (seconds)
+        print("world!!!!! ", self.client.get_world())
+        print("current loaded map: ", self.client.get_world().get_map().name)
         if carla_map is not None:
+            verbosePrint(f"→ CARLA server version: {self.client.get_server_version()}")
+            verbosePrint(f"→ CARLA available maps: {', '.join(self.client.get_available_maps())}")
+            verbosePrint(f"→ Attempting load_world('{carla_map}')")
             try:
-                self.world = self.client.load_world(carla_map)
+                #self.world = self.client.load_world(carla_map)
+                self.world = self.client.get_world()
             except Exception as e:
                 raise RuntimeError(f"CARLA could not load world '{carla_map}'") from e
         else:
@@ -154,7 +160,7 @@ class CarlaSimulation(DrivingSimulation):
             self.cameraManager = visuals.CameraManager(self.world, egoActor, self.hud)
             self.cameraManager._transform_index = camPosIndex
             self.cameraManager.set_sensor(camIndex)
-            self.cameraManager.set_transform(self.camTransform)
+            #self.cameraManager.set_transform(self.camTransform)
 
         self.world.tick()  ## allowing manualgearshift to take effect    # TODO still need this?
 
