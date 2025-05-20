@@ -46,15 +46,13 @@ class CarlaSimulator(DrivingSimulator):
         print("world!!!!! ", self.client.get_world())
         print("current loaded map: ", self.client.get_world().get_map().name)
         if carla_map is not None:
-            verbosePrint(f"→ CARLA server version: {self.client.get_server_version()}")
-            verbosePrint(f"→ CARLA available maps: {', '.join(self.client.get_available_maps())}")
-            verbosePrint(f"→ Attempting load_world('{carla_map}')")
+            print("--> CARLA server version: ", self.client.get_server_version())
             try:
-                #self.world = self.client.load_world(carla_map)
-                self.world = self.client.get_world()
+                self.world = self.client.load_world(carla_map)
             except Exception as e:
                 raise RuntimeError(f"CARLA could not load world '{carla_map}'") from e
         else:
+            print("-----> load from xodr: ", map_path)
             if str(map_path).endswith(".xodr"):
                 with open(map_path) as odr_file:
                     self.world = self.client.generate_opendrive_world(odr_file.read())

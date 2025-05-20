@@ -10,7 +10,12 @@ To run this file using the Carla simulator:
 
 ## SET MAP AND MODEL (i.e. definitions of all referenceable vehicle types, road library, etc)
 param map = localPath('../../../assets/maps/CARLA/Town10HD_Opt.xodr')
+#param map = localPath('../../../assets/maps/CARLA/Town01.xodr')
+
 param carla_map = 'Town10HD_Opt'
+#param carla_map = 'Town01'
+#param carla_map = None
+
 model scenic.simulators.carla.model
 
 ## CONSTANTS
