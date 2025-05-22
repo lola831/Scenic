@@ -9,18 +9,18 @@ To run this file using the Carla simulator:
 """
 
 # SET MAP AND MODEL (i.e. definitions of all referenceable vehicle types, road library, etc)
-param map = localPath('../../../assets/maps/CARLA/Town05.xodr')
-param carla_map = 'Town05'
+param map = localPath('../../../assets/maps/CARLA/Town10HD_Opt.xodr')
+param carla_map = 'Town10HD_Opt'
 model scenic.simulators.carla.model
 
 # CONSTANTS
-EGO_MODEL = "vehicle.lincoln.mkz_2017"
-EGO_SPEED = 10
+EGO_MODEL = "vehicle.nissan.patrol"
+EGO_SPEED = 6
 SAFETY_DISTANCE = 10
 BRAKE_INTENSITY = 1.0
 
-PEDESTRIAN_MIN_SPEED = 1.0
-THRESHOLD = 20
+PEDESTRIAN_MIN_SPEED = 2.0
+THRESHOLD = 30
 
 # EGO BEHAVIOR: Follow lane and brake when reaches threshold distance to obstacle
 behavior EgoBehavior(speed=10):
@@ -51,10 +51,10 @@ vending_machine = new VendingMachine right of vending_spot by 3,
     with heading -90 deg relative to vending_spot.heading,
     with regionContainedIn None
 
-ego = new Car following roadDirection from spot for Range(-30, -20),
+ego = new Car following roadDirection from spot for Range(-50, -40),
     with blueprint EGO_MODEL,
     with behavior EgoBehavior(EGO_SPEED)
 
-require (distance to intersection) > 75
+require (distance to intersection) > 50
 require (ego.laneSection._slowerLane is None)
-terminate when (distance to spot) > 50
+terminate when (distance to spot) > 30

@@ -1,5 +1,8 @@
 """CARLA blueprints for cars, pedestrians, etc."""
 
+from importlib.metadata import version
+carla_pkg_version = version('carla')
+
 #: Mapping from current names of blueprints to ones in old CARLA versions.
 #:
 #: We provide a tuple of old names in case they change more than once.
@@ -14,26 +17,42 @@ oldBlueprintNames = {
 ## Vehicle blueprints
 
 #: blueprints for cars
-carModels = [
-    "vehicle.audi.a2",
-    "vehicle.audi.etron",
-    "vehicle.audi.tt",
-    "vehicle.bmw.grandtourer",
-    "vehicle.chevrolet.impala",
-    "vehicle.citroen.c3",
-    "vehicle.dodge.charger_police",
-    "vehicle.jeep.wrangler_rubicon",
-    "vehicle.lincoln.mkz_2017",
-    "vehicle.mercedes.coupe",
-    "vehicle.mini.cooper_s",
-    "vehicle.ford.mustang",
-    "vehicle.nissan.micra",
-    "vehicle.nissan.patrol",
-    "vehicle.seat.leon",
-    "vehicle.tesla.model3",
-    "vehicle.toyota.prius",
-    "vehicle.volkswagen.t2",
-]
+if carla_pkg_version == "0.10.0":
+    carModels = [
+        "vehicle.taxi.ford",
+        "vehicle.dodgecop.charger",
+        "vehicle.fuso.mitsubishi",
+        "vehicle.carlacola.actros",
+        "vehicle.firetruck.actros",
+        "vehicle.dodge.charger",
+        "vehicle.sprinter.mercedes",
+        "vehicle.ambulance.ford",
+        "vehicle.nissan.patrol",
+        "vehicle.mini.cooper",
+        "vehicle.lincoln.mkz",
+    ]
+else:
+    carModels = [
+        "vehicle.audi.a2",
+        "vehicle.audi.etron",
+        "vehicle.audi.tt",
+        "vehicle.bmw.grandtourer",
+        "vehicle.chevrolet.impala",
+        "vehicle.citroen.c3",
+        "vehicle.dodge.charger_police",
+        "vehicle.jeep.wrangler_rubicon",
+        "vehicle.lincoln.mkz_2017",
+        "vehicle.mercedes.coupe",
+        "vehicle.mini.cooper_s",
+        "vehicle.ford.mustang",
+        "vehicle.nissan.micra",
+        "vehicle.nissan.patrol",
+        "vehicle.seat.leon",
+        "vehicle.tesla.model3",
+        "vehicle.toyota.prius",
+        "vehicle.volkswagen.t2",
+    ]
+
 
 #: blueprints for bicycles
 bicycleModels = [
@@ -58,14 +77,19 @@ truckModels = [
 ## Prop blueprints
 
 #: blueprints for trash cans
-trashModels = [
-    "static.prop.trashcan01",
-    "static.prop.trashcan02",
-    "static.prop.trashcan03",
-    "static.prop.trashcan04",
-    "static.prop.trashcan05",
-    "static.prop.bin",
-]
+if carla_pkg_version == "0.10.0":
+    trashModels = [
+        "static.prop.dumpster",
+    ]
+else:
+    trashModels = [
+        "static.prop.trashcan01",
+        "static.prop.trashcan02",
+        "static.prop.trashcan03",
+        "static.prop.trashcan04",
+        "static.prop.trashcan05",
+        "static.prop.bin",
+    ]
 
 #: blueprints for traffic cones
 coneModels = [

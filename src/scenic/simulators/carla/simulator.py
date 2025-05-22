@@ -154,7 +154,8 @@ class CarlaSimulation(DrivingSimulation):
             self.cameraManager = visuals.CameraManager(self.world, egoActor, self.hud)
             self.cameraManager._transform_index = camPosIndex
             self.cameraManager.set_sensor(camIndex)
-            self.cameraManager.set_transform(self.camTransform)
+            if self.client.get_server_version() != '0.10.0':
+                self.cameraManager.set_transform(self.camTransform)
 
         self.world.tick()  ## allowing manualgearshift to take effect    # TODO still need this?
 
@@ -176,8 +177,10 @@ class CarlaSimulation(DrivingSimulation):
     def createObjectInSimulator(self, obj):
         # Extract blueprint
         try:
+            print("!!! BLUEPRINT !!! ", obj.blueprint)
             blueprint = self.blueprintLib.find(obj.blueprint)
         except IndexError as e:
+            print("ERRORR NOT!!!!")
             found = False
             if obj.blueprint in oldBlueprintNames:
                 for oldName in oldBlueprintNames[obj.blueprint]:
@@ -191,12 +194,14 @@ class CarlaSimulation(DrivingSimulation):
                         obj.blueprint = oldName
                         break
                     except IndexError:
+                        print("in heyyaaaa")
                         continue
             if not found:
                 raise SimulationCreationError(
                     f"Unable to find blueprint {obj.blueprint}" f" for object {obj}"
                 ) from e
         if obj.rolename is not None:
+            print("GOOD")
             blueprint.set_attribute("role_name", obj.rolename)
 
         # set walker as not invincible
