@@ -18,6 +18,10 @@ import pygame
 
 from scenic.core.simulators import SimulationCreationError
 from scenic.domains.driving.simulators import DrivingSimulation, DrivingSimulator
+from scenic.domains.driving.controllers import (
+    PIDLateralController,
+    PIDLongitudinalController,
+)
 from scenic.simulators.carla.blueprints import oldBlueprintNames
 import scenic.simulators.carla.utils.utils as utils
 import scenic.simulators.carla.utils.visuals as visuals
@@ -178,6 +182,10 @@ class CarlaSimulation(DrivingSimulation):
         # Extract blueprint
         try:
             print("!!! BLUEPRINT !!! ", obj.blueprint)
+            # print("=== CARLA blueprint library ===")
+            # for bp in self.blueprintLib:
+            #     print(bp.id)
+            # print("=== end of library ===")
             blueprint = self.blueprintLib.find(obj.blueprint)
         except IndexError as e:
             print("ERRORR NOT!!!!")
@@ -322,3 +330,53 @@ class CarlaSimulation(DrivingSimulation):
 
         self.world.tick()
         super().destroy()
+
+    def getLaneFollowingControllers(self, agent):
+        if self.client.get_server_version() == '0.10.0':
+            print("CHECK FOR 0.10.0")
+            dt = self.timestep
+            if agent.isCar:
+                lon_controller = PIDLongitudinalController(K_P=1.0, K_D=0.2, K_I=1.4, dt=dt)
+                lat_controller = PIDLateralController(K_P=1.0, K_D=0.2, K_I=0.0, dt=dt)
+            else:
+                lon_controller = PIDLongitudinalController(
+                    K_P=0.5, K_D=0.05, K_I=0.0, dt=dt
+                )
+                lat_controller = PIDLateralController(K_P=1.0, K_D=0.2, K_I=0.0, dt=dt)
+            return lon_controller, lat_controller
+        print("CHECK FOR 0.9.15")
+        return super().getLaneFollowingControllers(agent)
+
+    def getTurningControllers(self, agent):
+        """Get longitudinal and lateral controllers for turning."""
+        if self.client.get_server_version() == '0.10.0':
+            print("CHECK FOR 0.10.0")
+            dt = self.timestep
+            if agent.isCar:
+                lon_controller = PIDLongitudinalController(K_P=1.0, K_D=0.2, K_I=1.4, dt=dt)
+                lat_controller = PIDLateralController(K_P=2.0, K_D=0.2, K_I=0.0, dt=dt)
+            else:
+                lon_controller = PIDLongitudinalController(
+                    K_P=0.5, K_D=0.05, K_I=0.0, dt=dt
+                )
+                lat_controller = PIDLateralController(K_P=2.0, K_D=0.2, K_I=0.0, dt=dt)
+            return lon_controller, lat_controller
+        print("CHECK FOR 0.9.15")
+        return super().getTurningControllers(agent)
+
+    def getLaneChangingControllers(self, agent):
+        """Get longitudinal and lateral controllers for lane changing."""
+        if self.client.get_server_version() == '0.10.0':
+            print("CHECK FOR 0.10.0")
+            dt = self.timestep
+            if agent.isCar:
+                lon_controller = PIDLongitudinalController(K_P=1.0, K_D=0.2, K_I=1.4, dt=dt)
+                lat_controller = PIDLateralController(K_P=0.08, K_D=0.3, K_I=0.0, dt=dt)
+            else:
+                lon_controller = PIDLongitudinalController(
+                    K_P=0.5, K_D=0.05, K_I=0.0, dt=dt
+                )
+                lat_controller = PIDLateralController(K_P=0.1, K_D=0.3, K_I=0.0, dt=dt)
+            return lon_controller, lat_controller
+        print("CHECK FOR 0.9.15")
+        return super().getLaneChangingControllers(agent)

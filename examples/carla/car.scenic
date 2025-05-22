@@ -5,4 +5,4 @@ To run this file using the Carla simulator:
 param map = localPath('../../assets/maps/CARLA/Town10HD_Opt.xodr')
 model scenic.simulators.carla.model
 
-ego = new Car with blueprint "static.prop.trashcan01"
+ego = new Truck with blueprint "vehicle.carlacola.actors"

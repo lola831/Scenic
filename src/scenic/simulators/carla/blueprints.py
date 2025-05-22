@@ -3,6 +3,8 @@
 from importlib.metadata import version
 carla_pkg_version = version('carla')
 
+print("IN BLUEPRINT: ", carla_pkg_version)
+
 #: Mapping from current names of blueprints to ones in old CARLA versions.
 #:
 #: We provide a tuple of old names in case they change more than once.
@@ -18,19 +20,52 @@ oldBlueprintNames = {
 
 #: blueprints for cars
 if carla_pkg_version == "0.10.0":
+    print("in carla 10 cars")
     carModels = [
         "vehicle.taxi.ford",
         "vehicle.dodgecop.charger",
-        "vehicle.fuso.mitsubishi",
-        "vehicle.carlacola.actros",
-        "vehicle.firetruck.actros",
         "vehicle.dodge.charger",
-        "vehicle.sprinter.mercedes",
-        "vehicle.ambulance.ford",
         "vehicle.nissan.patrol",
         "vehicle.mini.cooper",
         "vehicle.lincoln.mkz",
     ]
+
+    trashModels = [
+        "static.prop.trashcan01",
+        "static.prop.trashcan02",
+        "static.prop.trashcan03",
+        "static.prop.trashcan04",
+        "static.prop.dumpster",
+    ]
+
+    truckModels = [
+        "vehicle.ambulance.ford",
+        "vehicle.sprinter.mercedes",
+        "vehicle.fuso.mitsubishi",       #van??
+        "vehicle.carlacola.actors",
+        "vehicle.firetruck.actors",
+    ]
+
+    ## Walker blueprints
+    "PRINT IN 10 WALKERS"
+    #: blueprints for pedestrians
+    walkerModels = [
+        "walker.pedestrian.0015",
+        "walker.pedestrian.0016",
+        "walker.pedestrian.0017",
+        "walker.pedestrian.0018",
+        "walker.pedestrian.0019",
+        "walker.pedestrian.0020",
+        "walker.pedestrian.0021",
+        "walker.pedestrian.0022",
+        "walker.pedestrian.0023",
+        "walker.pedestrian.0024",
+        "walker.pedestrian.0025",
+        "walker.pedestrian.0026",
+        "walker.pedestrian.0027",
+        "walker.pedestrian.0028",
+    ]
+
 else:
     carModels = [
         "vehicle.audi.a2",
@@ -53,7 +88,43 @@ else:
         "vehicle.volkswagen.t2",
     ]
 
+    trashModels = [
+        "static.prop.trashcan01",
+        "static.prop.trashcan02",
+        "static.prop.trashcan03",
+        "static.prop.trashcan04",
+        "static.prop.trashcan05",
+        "static.prop.bin",
+    ]
 
+    #: blueprints for trucks
+    truckModels = [
+        "vehicle.carlamotors.carlacola",
+        "vehicle.tesla.cybertruck",
+    ]
+
+    ## Walker blueprints
+
+    #: blueprints for pedestrians
+    walkerModels = [
+        "walker.pedestrian.0001",
+        "walker.pedestrian.0002",
+        "walker.pedestrian.0003",
+        "walker.pedestrian.0004",
+        "walker.pedestrian.0005",
+        "walker.pedestrian.0006",
+        "walker.pedestrian.0007",
+        "walker.pedestrian.0008",
+        "walker.pedestrian.0009",
+        "walker.pedestrian.0010",
+        "walker.pedestrian.0011",
+        "walker.pedestrian.0012",
+        "walker.pedestrian.0013",
+        "walker.pedestrian.0014",
+    ]
+
+
+#----none for 0.10.0!!!
 #: blueprints for bicycles
 bicycleModels = [
     "vehicle.bh.crossbike",
@@ -68,28 +139,6 @@ motorcycleModels = [
     "vehicle.yamaha.yzf",
 ]
 
-#: blueprints for trucks
-truckModels = [
-    "vehicle.carlamotors.carlacola",
-    "vehicle.tesla.cybertruck",
-]
-
-## Prop blueprints
-
-#: blueprints for trash cans
-if carla_pkg_version == "0.10.0":
-    trashModels = [
-        "static.prop.dumpster",
-    ]
-else:
-    trashModels = [
-        "static.prop.trashcan01",
-        "static.prop.trashcan02",
-        "static.prop.trashcan03",
-        "static.prop.trashcan04",
-        "static.prop.trashcan05",
-        "static.prop.bin",
-    ]
 
 #: blueprints for traffic cones
 coneModels = [
@@ -107,7 +156,7 @@ debrisModels = [
 
 #: blueprints for vending machines
 vendingMachineModels = [
-    "static.prop.vendingmachine",
+    "static.prop.vendingmachine",  #also in 0.10.0
 ]
 
 #: blueprints for chairs
@@ -236,22 +285,4 @@ trafficwarningModels = [
     "static.prop.trafficwarning",
 ]
 
-## Walker blueprints
 
-#: blueprints for pedestrians
-walkerModels = [
-    "walker.pedestrian.0001",
-    "walker.pedestrian.0002",
-    "walker.pedestrian.0003",
-    "walker.pedestrian.0004",
-    "walker.pedestrian.0005",
-    "walker.pedestrian.0006",
-    "walker.pedestrian.0007",
-    "walker.pedestrian.0008",
-    "walker.pedestrian.0009",
-    "walker.pedestrian.0010",
-    "walker.pedestrian.0011",
-    "walker.pedestrian.0012",
-    "walker.pedestrian.0013",
-    "walker.pedestrian.0014",
-]
