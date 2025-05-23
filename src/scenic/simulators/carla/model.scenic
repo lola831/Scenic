@@ -76,7 +76,7 @@ map_town = pathlib.Path(globalParameters.map).stem
 param carla_map = map_town
 param address = '127.0.0.1'
 param port = 2000
-param timeout = 10
+param timeout = 60
 param render = 1
 if globalParameters.render not in [0, 1]:
     raise ValueError('render param must be either 0 or 1')

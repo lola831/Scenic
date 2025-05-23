@@ -158,8 +158,8 @@ class CarlaSimulation(DrivingSimulation):
             self.cameraManager = visuals.CameraManager(self.world, egoActor, self.hud)
             self.cameraManager._transform_index = camPosIndex
             self.cameraManager.set_sensor(camIndex)
-            if self.client.get_server_version() != '0.10.0':
-                self.cameraManager.set_transform(self.camTransform)
+            # if self.client.get_server_version() != '0.10.0':
+            #     self.cameraManager.set_transform(self.camTransform)
 
         self.world.tick()  ## allowing manualgearshift to take effect    # TODO still need this?
 
@@ -380,3 +380,37 @@ class CarlaSimulation(DrivingSimulation):
             return lon_controller, lat_controller
         print("CHECK FOR 0.9.15")
         return super().getLaneChangingControllers(agent)
+
+
+    # def getLaneFollowingControllers(self, agent):
+    #     """Get longitudinal and lateral controllers for lane following."""
+    #     dt = self.timestep
+    #     if agent.isCar:
+    #         lon_controller = PIDLongitudinalController(K_P=1.0, K_D=0.2, K_I=1.4, dt=dt)
+    #         lat_controller = PIDLateralController(K_P=1.0, K_D=0.2, K_I=0.0, dt=dt)
+    #     else:
+    #         lon_controller = PIDLongitudinalController(K_P=0.5, K_D=0.05, K_I=0.0, dt=dt)
+    #         lat_controller = PIDLateralController(K_P=1.0, K_D=0.2, K_I=0.0, dt=dt)
+    #     return lon_controller, lat_controller
+
+    # def getTurningControllers(self, agent):
+    #     """Get longitudinal and lateral controllers for turning."""
+    #     dt = self.timestep
+    #     if agent.isCar:
+    #         lon_controller = PIDLongitudinalController(K_P=1.0, K_D=0.2, K_I=1.4, dt=dt)
+    #         lat_controller = PIDLateralController(K_P=2.0, K_D=0.2, K_I=0.0, dt=dt)
+    #     else:
+    #         lon_controller = PIDLongitudinalController(K_P=0.5, K_D=0.05, K_I=0.0, dt=dt)
+    #         lat_controller = PIDLateralController(K_P=2.0, K_D=0.2, K_I=0.0, dt=dt)
+    #     return lon_controller, lat_controller
+
+    # def getLaneChangingControllers(self, agent):
+    #     """Get longitudinal and lateral controllers for lane changing."""
+    #     dt = self.timestep
+    #     if agent.isCar:
+    #         lon_controller = PIDLongitudinalController(K_P=1.0, K_D=0.2, K_I=1.4, dt=dt)
+    #         lat_controller = PIDLateralController(K_P=0.08, K_D=0.3, K_I=0.0, dt=dt)
+    #     else:
+    #         lon_controller = PIDLongitudinalController(K_P=0.5, K_D=0.05, K_I=0.0, dt=dt)
+    #         lat_controller = PIDLateralController(K_P=0.1, K_D=0.3, K_I=0.0, dt=dt)
+    #     return lon_controller, lat_controller
