@@ -1,8 +1,8 @@
 """
 TITLE: Intersection 03
 AUTHOR: Francis Indaheng, findaheng@berkeley.edu
-DESCRIPTION: Ego vehicle either goes straight or makes a left turn at 
-4-way intersection and must suddenly stop to avoid collision when 
+DESCRIPTION: Ego vehicle either goes straight or makes a left turn at
+4-way intersection and must suddenly stop to avoid collision when
 adversary vehicle from lateral lane continues straight.
 SOURCE: NHSTA, #28 #29
 
@@ -14,15 +14,15 @@ To run this file using the Carla simulator:
 # MAP AND MODEL                 #
 #################################
 
-param map = localPath('../../../../assets/maps/CARLA/Town05.xodr')
-param carla_map = 'Town05'
+param map = localPath('../../../../assets/maps/CARLA/Town10HD_Opt.xodr')
+param carla_map = 'Town10HD_Opt'
 model scenic.simulators.carla.model
 
 #################################
 # CONSTANTS                     #
 #################################
 
-MODEL = 'vehicle.lincoln.mkz_2017'
+MODEL = 'vehicle.nissan.patrol'
 
 EGO_INIT_DIST = [20, 25]
 param EGO_SPEED = VerifaiRange(7, 10)
@@ -62,8 +62,8 @@ egoSpawnPt = new OrientedPoint in egoInitLane.centerline
 
 advInitLane = Uniform(*filter(lambda m:
         m.type is ManeuverType.STRAIGHT,
-        Uniform(*filter(lambda m: 
-            m.type is ManeuverType.STRAIGHT, 
+        Uniform(*filter(lambda m:
+            m.type is ManeuverType.STRAIGHT,
             egoInitLane.maneuvers)
         ).conflictingManeuvers)
     ).startLane

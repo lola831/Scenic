@@ -94,5 +94,5 @@ model_data = {
     [(type, name) for type, names in model_data.items() for name in names],
 )
 def test_model_blueprints(getCarlaSimulator, modelType, modelName):
-    simulator, town, mapPath = getCarlaSimulator("Town01")
+    simulator, town, mapPath = getCarlaSimulator("Town10HD_Opt")
     model_blueprint(simulator, mapPath, town, modelType, modelName)

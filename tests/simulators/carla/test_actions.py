@@ -67,7 +67,7 @@ def getCarlaSimulator(getAssetPath):
 
 
 def test_throttle(getCarlaSimulator):
-    simulator, town, mapPath = getCarlaSimulator("Town01")
+    simulator, town, mapPath = getCarlaSimulator("Town10HD_Opt")
     code = f"""
         param map = r'{mapPath}'
         param carla_map = '{town}'
@@ -91,7 +91,7 @@ def test_throttle(getCarlaSimulator):
 
 
 def test_brake(getCarlaSimulator):
-    simulator, town, mapPath = getCarlaSimulator("Town01")
+    simulator, town, mapPath = getCarlaSimulator("Town10HD_Opt")
     code = f"""
         param map = r'{mapPath}'
         param carla_map = '{town}'

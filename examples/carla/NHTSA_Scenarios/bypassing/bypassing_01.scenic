@@ -1,7 +1,7 @@
 """
 TITLE: Bypassing 01
 AUTHOR: Francis Indaheng, findaheng@berkeley.edu
-DESCRIPTION: Ego vehicle performs a lane change to bypass a slow 
+DESCRIPTION: Ego vehicle performs a lane change to bypass a slow
 adversary vehicle before returning to its original lane.
 SOURCE: NHSTA, #16
 
@@ -13,15 +13,15 @@ To run this file using the Carla simulator:
 # MAP AND MODEL                 #
 #################################
 
-param map = localPath('../../../../assets/maps/CARLA/Town03.xodr')
-param carla_map = 'Town03'
+param map = localPath('../../../../assets/maps/CARLA/Town10HD_Opt.xodr')
+param carla_map = 'Town10HD_Opt'
 model scenic.simulators.carla.model
 
 #################################
 # CONSTANTS                     #
 #################################
 
-MODEL = 'vehicle.lincoln.mkz_2017'
+MODEL = 'vehicle.nissan.patrol'
 
 param EGO_SPEED = VerifaiRange(7, 10)
 
@@ -53,7 +53,7 @@ behavior EgoBehavior():
                 laneSectionToSwitch=slowerLaneSec,
                 target_speed=globalParameters.EGO_SPEED)
         do FollowLaneBehavior(target_speed=globalParameters.EGO_SPEED) for TERM_TIME seconds
-        terminate 
+        terminate
 
 #################################
 # SPATIAL RELATIONS             #

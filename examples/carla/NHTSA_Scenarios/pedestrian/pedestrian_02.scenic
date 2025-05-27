@@ -1,7 +1,7 @@
 """
 TITLE: Pedestrian 02
 AUTHOR: Francis Indaheng, findaheng@berkeley.edu
-DESCRIPTION: Both ego and adversary vehicles must suddenly stop to avoid 
+DESCRIPTION: Both ego and adversary vehicles must suddenly stop to avoid
 collision when pedestrian crosses the road unexpectedly.
 SOURCE: Carla Challenge, #03
 
@@ -13,15 +13,15 @@ To run this file using the Carla simulator:
 # MAP AND MODEL                 #
 #################################
 
-param map = localPath('../../../../assets/maps/CARLA/Town01.xodr')
-param carla_map = 'Town01'
+param map = localPath('../../../../assets/maps/CARLA/Town10HD_Opt.xodr')
+param carla_map = 'Town10HD_Opt'
 model scenic.simulators.carla.model
 
 #################################
 # CONSTANTS                     #
 #################################
 
-MODEL = 'vehicle.lincoln.mkz_2017'
+MODEL = 'vehicle.nissan.patrol'
 
 param EGO_INIT_DIST = VerifaiRange(-30, -20)
 param EGO_SPEED = VerifaiRange(7, 10)
