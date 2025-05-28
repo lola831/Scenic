@@ -12,13 +12,18 @@ NOTE: CARLA 0.10.x currently ships *no* bicycle, motorcycle, box or
 iron-plate props—those appear only in ≤0.9.x.
 """
 
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError, version
 
 # ---------------------------------------------------------------------------
 # Detect CARLA version
 # ---------------------------------------------------------------------------
 
-carla_pkg_version = version("carla")
+try:
+    carla_pkg_version = version("carla")
+except PackageNotFoundError:
+    # during docs builds or no client installed, assume an older version
+    carla_pkg_version = "0.0.0"
+
 is_carla_0_10 = carla_pkg_version.startswith("0.10")
 
 # ---------------------------------------------------------------------------
