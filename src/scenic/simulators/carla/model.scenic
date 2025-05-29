@@ -187,21 +187,15 @@ class Car(Vehicle):
 class NPCCar(Car):  # no distinction between these in CARLA
     pass
 
-class Bicycle(Vehicle):
-    width: 1
-    length: 2
-
-    # only runs when you actually do `new Bicycle`
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if blueprints.is_carla_0_10 and not blueprints.bicycleModels:
-            raise RuntimeError(
-                "CARLA 0.10.x ships no default bicycle blueprints;\n"
-                "please specify one explicitly, e.g.:\n\n"
-                "    new Bicycle with blueprint 'vehicle.bh.crossbike'"
-            )
-
-    blueprint: Uniform(*blueprints.bicycleModels)
+if blueprints.bicycleModels:
+    class Bicycle(Vehicle):
+        width: 1
+        length: 2
+        blueprint: Uniform(*blueprints.bicycleModels)
+else:
+    raise RuntimeError(
+        f"'Bicycle' object cannot be used: no bicycle blueprints available in CARLA {blueprints.carla_pkg_version}."
+    )
 
 
 class Motorcycle(Vehicle):
