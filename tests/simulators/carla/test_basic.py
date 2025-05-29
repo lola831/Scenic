@@ -9,14 +9,14 @@ pytestmark = pytest.mark.filterwarnings(
 
 
 def test_map_param_parse(getAssetPath):
-    mapPath = getAssetPath("maps/CARLA/Town01.xodr")
+    mapPath = getAssetPath("maps/CARLA/Town10HD_Opt.xodr")
     code = f"""
         param map = r'{mapPath}'
         model scenic.simulators.carla.model
         ego = new Car
     """
     scenario = compileScenic(code, mode2D=True)
-    assert scenario.params["carla_map"] == "Town01"
+    assert scenario.params["carla_map"] == "Town10HD_Opt"
 
 
 def test_basic(loadLocalScenario):
@@ -31,10 +31,10 @@ def test_simulator_import():
 
 def test_consistent_object_type(getAssetPath):
     pytest.importorskip("carla")
-    mapPath = getAssetPath("maps/CARLA/Town01.xodr")
+    mapPath = getAssetPath("maps/CARLA/Town10HD_Opt.xodr")
     code = f"""
         param map = r'{mapPath}'
-        param carla_map = 'Town01'
+        param carla_map = 'Town10HD_Opt'
         model scenic.simulators.carla.model
         action = SetGearAction(0)
         ego = new Car

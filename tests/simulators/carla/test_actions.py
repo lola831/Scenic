@@ -18,8 +18,8 @@ from tests.utils import compileScenic, sampleScene
 
 
 def checkCarlaPath():
-    CARLA_ROOT = os.environ.get("CARLA_ROOT")
-    if not CARLA_ROOT:
+    CARLA_ROOT = Path(os.environ.get("CARLA_ROOT", ""))
+    if not CARLA_ROOT.exists():
         pytest.skip("CARLA_ROOT env variable not set.")
     return CARLA_ROOT
 
@@ -39,8 +39,21 @@ def getCarlaSimulator(getAssetPath):
     carla_process = None
     if not isCarlaServerRunning():
         CARLA_ROOT = checkCarlaPath()
+        # decide which startup script to use
+        ue_script = (
+            "CarlaUnreal.sh"
+            if (CARLA_ROOT / "CarlaUnreal.sh").exists()
+            else "CarlaUE4.sh"
+        )
+        # and which binary to kill later
+        exec_name = (
+            "CarlaUnreal-Linux-Shipping"
+            if ue_script == "CarlaUnreal.sh"
+            else "CarlaUE4-Linux-Shipping"
+        )
+
         carla_process = subprocess.Popen(
-            f"bash {CARLA_ROOT}/CarlaUE4.sh -RenderOffScreen", shell=True
+            f"bash {CARLA_ROOT / ue_script} -RenderOffScreen", shell=True
         )
 
         for _ in range(180):
@@ -63,7 +76,7 @@ def getCarlaSimulator(getAssetPath):
     yield _getCarlaSimulator
 
     if carla_process:
-        subprocess.run("killall -9 CarlaUE4-Linux-Shipping", shell=True)
+        subprocess.run(f"killall -9 {exec_name}", shell=True)
 
 
 def test_throttle(getCarlaSimulator):
@@ -112,7 +125,7 @@ def test_brake(getCarlaSimulator):
             do Brake() for 6 steps
 
         ego = new Car at (369, -326),
-            with blueprint 'vehicle.toyota.prius',
+            with blueprint 'vehicle.nissan.patrol',
             with behavior DriveThenBrake
         record final ego.speed as CarSpeed
         terminate after 8 steps

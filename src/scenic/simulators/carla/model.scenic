@@ -19,7 +19,7 @@ Global Parameters:
         interrupts CARLA to run behaviors, check requirements, etc.), in seconds. Default
         is 0.1 seconds.
     snapToGroundDefault (bool): Default value for :prop:`snapToGround` on `CarlaActor` objects.
-        Default is True if :ref:`2D compatibility mode` is enabled and False otherwise. 
+        Default is True if :ref:`2D compatibility mode` is enabled and False otherwise.
 
     weather (str or dict): Weather to use for the simulation. Can be either a
         string identifying one of the CARLA weather presets (e.g. 'ClearSunset') or a
@@ -190,6 +190,17 @@ class NPCCar(Car):  # no distinction between these in CARLA
 class Bicycle(Vehicle):
     width: 1
     length: 2
+
+    # only runs when you actually do `new Bicycle`
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if blueprints.is_carla_0_10 and not blueprints.bicycleModels:
+            raise RuntimeError(
+                "CARLA 0.10.x ships no default bicycle blueprints;\n"
+                "please specify one explicitly, e.g.:\n\n"
+                "    new Bicycle with blueprint 'vehicle.bh.crossbike'"
+            )
+
     blueprint: Uniform(*blueprints.bicycleModels)
 
 
@@ -411,7 +422,7 @@ def setClosestTrafficLightStatus(vehicle, color, distance=100):
     color = _utils.scenicToCarlaTrafficLightStatus(color)
     if color is None:
         raise RuntimeError('Color must be red/yellow/green/off/unknown.')
-    
+
     traffic_light = _getClosestTrafficLight(vehicle, distance)
     if traffic_light is not None:
         traffic_light.set_state(color)

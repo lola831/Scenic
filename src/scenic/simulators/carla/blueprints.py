@@ -124,10 +124,24 @@ if is_carla_0_10:
         "walker.pedestrian.0028",
     ]
 
+    #: blueprints for bicycles (none in 0.10.x)
+    bicycleModels = [
+        "vehicle.bh.crossbike",
+        "vehicle.diamondback.century",
+        "vehicle.gazelle.omafiets",
+    ]
+
+    #: blueprints for motorcycles (none in 0.10.x)
+    motorcycleModels = []
+
+    #: blueprints for boxes (none in 0.10.x)
+    boxModels = []
+
+    #: blueprints for iron plates (none in 0.10.x)
+    ironplateModels = []
+
 else:
     # -- CARLA ≤0.9.x -------------------------------------------------------
-
-    ## Vehicle blueprints
 
     #: blueprints for cars
     carModels = [
@@ -156,8 +170,6 @@ else:
         "vehicle.carlamotors.carlacola",
         "vehicle.tesla.cybertruck",
     ]
-
-    ## Prop blueprints
 
     #: blueprints for trash cans
     trashModels = [
@@ -208,8 +220,6 @@ else:
         "static.prop.bench03",
     ]
 
-    ## Walker blueprints
-
     #: blueprints for pedestrians
     walkerModels = [
         "walker.pedestrian.0001",
@@ -228,35 +238,35 @@ else:
         "walker.pedestrian.0014",
     ]
 
+    #: blueprints for bicycles
+    bicycleModels = [
+        "vehicle.bh.crossbike",
+        "vehicle.diamondback.century",
+        "vehicle.gazelle.omafiets",
+    ]
+
+    #: blueprints for motorcycles
+    motorcycleModels = [
+        "vehicle.harley-davidson.low_rider",
+        "vehicle.kawasaki.ninja",
+        "vehicle.yamaha.yzf",
+    ]
+
+    #: blueprints for boxes
+    boxModels = [
+        "static.prop.box01",
+        "static.prop.box02",
+        "static.prop.box03",
+    ]
+
+    #: blueprints for iron plates
+    ironplateModels = [
+        "static.prop.ironplank",
+    ]
+
 # ---------------------------------------------------------------------------
 # Models shared by all versions
 # ---------------------------------------------------------------------------
-
-#: blueprints for bicycles (none in 0.10.x)
-bicycleModels = [
-    "vehicle.bh.crossbike",
-    "vehicle.diamondback.century",
-    "vehicle.gazelle.omafiets",
-]
-
-#: blueprints for motorcycles (none in 0.10.x)
-motorcycleModels = [
-    "vehicle.harley-davidson.low_rider",
-    "vehicle.kawasaki.ninja",
-    "vehicle.yamaha.yzf",
-]
-
-#: blueprints for boxes (none in 0.10.x)
-boxModels = [
-    "static.prop.box01",
-    "static.prop.box02",
-    "static.prop.box03",
-]
-
-#: blueprints for iron plates (none in 0.10.x)
-ironplateModels = [
-    "static.prop.ironplank",
-]
 
 #: blueprints for traffic cones
 coneModels = [
