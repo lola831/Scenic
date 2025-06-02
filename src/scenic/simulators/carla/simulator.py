@@ -47,9 +47,14 @@ class CarlaSimulator(DrivingSimulator):
         verbosePrint(f"Connecting to CARLA on port {port}")
         self.client = carla.Client(address, port)
         self.client.set_timeout(timeout)  # limits networking operations (seconds)
+        print(self.client.get_available_maps())
+        print(self.client.get_world().get_map().name)
         if carla_map is not None:
+            print("hehrr")
             try:
                 self.world = self.client.load_world(carla_map)
+                # self.world = self.client.load_world(self.client.get_world().get_map().name)
+                # self.world = self.client.get_world()
             except Exception as e:
                 raise RuntimeError(f"CARLA could not load world '{carla_map}'") from e
         else:
