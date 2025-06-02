@@ -88,11 +88,15 @@ model_data = {
     "Pedestrian": walkerModels,
 }
 
+non_empty_pairs = [
+    (modelType, name)
+    for modelType, names in model_data.items()
+    if names  # only include non‐empty lists
+    for name in names
+]
 
-@pytest.mark.parametrize(
-    "modelType, modelName",
-    [(type, name) for type, names in model_data.items() for name in names],
-)
+
+@pytest.mark.parametrize("modelType,modelName", non_empty_pairs)
 def test_model_blueprints(getCarlaSimulator, modelType, modelName):
     simulator, town, mapPath = getCarlaSimulator("Town10HD_Opt")
     model_blueprint(simulator, mapPath, town, modelType, modelName)
