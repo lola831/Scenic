@@ -56,7 +56,7 @@ def getCarlaSimulator(getAssetPath):
             f"bash {CARLA_ROOT / ue_script} -RenderOffScreen", shell=True
         )
 
-        for _ in range(180):
+        for _ in range(300):
             if isCarlaServerRunning():
                 break
             time.sleep(1)
@@ -92,7 +92,7 @@ def test_throttle(getCarlaSimulator):
             while True:
                 take SetThrottleAction(1)
 
-        ego = new Car at (369, -326), with behavior DriveWithThrottle
+        ego = new Car at (-111.76, -38.33), with behavior DriveWithThrottle
         record ego.speed as CarSpeed
         terminate after 5 steps
     """
@@ -124,7 +124,7 @@ def test_brake(getCarlaSimulator):
             do DriveWithThrottle() for 2 steps
             do Brake() for 6 steps
 
-        ego = new Car at (369, -326),
+        ego = new Car at (-111.76, -38.33),
             with blueprint 'vehicle.nissan.patrol',
             with behavior DriveThenBrake
         record final ego.speed as CarSpeed

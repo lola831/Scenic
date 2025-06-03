@@ -200,10 +200,17 @@ else:
             )
 
 
-class Motorcycle(Vehicle):
-    width: 1
-    length:2
-    blueprint: Uniform(*blueprints.motorcycleModels)
+if blueprints.motorcycleModels:
+    class Motorcycle(Vehicle):
+        width: 1
+        length:2
+        blueprint: Uniform(*blueprints.motorcycleModels)
+else:
+    class Motorcycle(Vehicle):
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError(
+                f"'Motorcycle' object cannot be used: no motorcycle blueprints available in CARLA {blueprints.carla_pkg_version}."
+            )
 
 
 class Truck(Vehicle):
@@ -309,8 +316,15 @@ class Case(Prop):
     blueprint: Uniform(*blueprints.caseModels)
 
 
-class Box(Prop):
-    blueprint: Uniform(*blueprints.boxModels)
+if blueprints.boxModels:
+    class Box(Prop):
+        blueprint: Uniform(*blueprints.boxModels)
+else:
+    class Box(Prop):
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError(
+                f"'Box' object cannot be used: no box blueprints available in CARLA {blueprints.carla_pkg_version}."
+            )
 
 
 class Bench(Prop):
@@ -329,8 +343,15 @@ class Kiosk(Prop):
     blueprint: Uniform(*blueprints.kioskModels)
 
 
-class IronPlate(Prop):
-    blueprint: Uniform(*blueprints.ironplateModels)
+if blueprints.ironplateModels:
+    class IronPlate(Prop):
+        blueprint: Uniform(*blueprints.ironplateModels)
+else:
+    class IronPlate(Prop):
+        def __init__(self, *args, **kwargs):
+            raise RuntimeError(
+                f"'Iron plate' object cannot be used: no iron plate blueprints available in CARLA {blueprints.carla_pkg_version}."
+            )
 
 
 class TrafficWarning(Prop):
