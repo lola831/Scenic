@@ -8,7 +8,6 @@ except ModuleNotFoundError:
 from test_actions import getCarlaSimulator
 
 from scenic.simulators.carla.blueprints import (
-    is_carla_0_10,
     advertisementModels,
     atmModels,
     barrelModels,
@@ -88,10 +87,6 @@ model_data = {
     "TrafficWarning": trafficwarningModels,
     "Pedestrian": walkerModels,
 }
-
-if is_carla_0_10:
-    for key in ("Bicycle", "Motorcycle", "Box", "IronPlate"):
-        model_data.pop(key, None)
 
 @pytest.mark.parametrize(
     "modelType, modelName",

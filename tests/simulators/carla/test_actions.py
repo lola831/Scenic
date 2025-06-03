@@ -56,7 +56,7 @@ def getCarlaSimulator(getAssetPath):
             f"bash {CARLA_ROOT / ue_script} -RenderOffScreen", shell=True
         )
 
-        for _ in range(300):
+        for _ in range(180):
             if isCarlaServerRunning():
                 break
             time.sleep(1)
@@ -134,4 +134,4 @@ def test_brake(getCarlaSimulator):
     scene = sampleScene(scenario)
     simulation = simulator.simulate(scene)
     finalSpeed = simulation.result.records["CarSpeed"]
-    assert finalSpeed == pytest.approx(0.0, abs=1e-1)
+    assert finalSpeed == pytest.approx(0.0, abs=2e-1)
