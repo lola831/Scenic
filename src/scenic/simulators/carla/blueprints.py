@@ -125,11 +125,7 @@ if is_carla_0_10:
     ]
 
     #: blueprints for bicycles (none in 0.10.x)
-    bicycleModels = [
-        "vehicle.bh.crossbike",
-        "vehicle.diamondback.century",
-        "vehicle.gazelle.omafiets",
-    ]
+    bicycleModels = []
 
     #: blueprints for motorcycles (none in 0.10.x)
     motorcycleModels = []
