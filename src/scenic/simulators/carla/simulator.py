@@ -182,6 +182,9 @@ class CarlaSimulation(DrivingSimulation):
         # Extract blueprint
         try:
             blueprint = self.blueprintLib.find(obj.blueprint)
+
+            # for bp in self.blueprintLib:
+            #     print(bp.id)
         except IndexError as e:
             found = False
             if obj.blueprint in oldBlueprintNames:
