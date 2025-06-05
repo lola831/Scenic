@@ -51,7 +51,7 @@ def getCarlaSimulator(getAssetPath):
             if ue_script == "CarlaUnreal.sh"
             else "CarlaUE4-Linux-Shipping"
         )
-
+        
         carla_process = subprocess.Popen(
             f"bash {CARLA_ROOT / ue_script} -RenderOffScreen", shell=True
         )

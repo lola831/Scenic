@@ -24,6 +24,7 @@ except PackageNotFoundError:
     # during docs builds or no client installed, assume an older version
     carla_pkg_version = "0.0.0"
 
+print("CARLA CLIENT: ", carla_pkg_version)
 is_carla_0_10 = carla_pkg_version.startswith("0.10")
 
 # ---------------------------------------------------------------------------

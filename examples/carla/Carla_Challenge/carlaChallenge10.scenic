@@ -34,8 +34,10 @@ behavior EgoBehavior(speed, trajectory):
 # Please refer to scenic/domains/driving/roads.py how to access detailed road infrastructure
 # 'network' is the 'class Network' object in roads.py
 
-#if...adderror
 fourWayIntersection = filter(lambda i: i.is4Way and not i.isSignalized, network.intersections)
+
+if not fourWayIntersection:
+    raise RuntimeError("This map doesn't have any four-way unsignalized intersections.")
 
 # make sure to put '*' to uniformly randomly select from all elements of the list
 intersec = Uniform(*fourWayIntersection)
