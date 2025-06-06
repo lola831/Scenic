@@ -40,16 +40,25 @@ airsimUtils.worldOffset = globalParameters.worldOffset
 
 @distributionFunction 
 def createMeshShape(subFolder, assetName):
+    
     objFile = assetName+".obj"
     
     tmesh = trimesh.load(worldInfoPath+subFolder+"/"+objFile)
+    dimensions = Vector(tmesh.bounding_box.extents[0],tmesh.bounding_box.extents[1],tmesh.bounding_box.extents[2]) / 100
+    
+    # if assetName in ("Cone", "cone_5"):
+    #     print("IN CREATEMESH, NAME: ", assetName)
+    #     # Print original Unreal-sized dimensions (in cm)
+    #     unreal_dims = tmesh.bounding_box.extents
+    #     print(f"[Unreal Mesh] '{assetName}' original size (cm):", unreal_dims)
+    #     print("DIMENSIONS IN CREATEMESH: ", dimensions)
 
-
-    center = (tmesh.bounds[0] + tmesh.bounds[1]) / 2
-
+    # Convert from Unreal units (centimeters) to Scenic/AirSim units (meters)
     scale_matrix = trimesh.transformations.compose_matrix(scale=(0.01, 0.01, 0.01))
     tmesh.apply_transform(scale_matrix)
     
+    # Rotate from Z-up to Z-down
+    # rotates the object 90 degrees around the X-axis.
     rotation_matrix = trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0])
     tmesh.apply_transform(rotation_matrix)
 
@@ -57,12 +66,7 @@ def createMeshShape(subFolder, assetName):
     center = (tmesh.bounds[0] + tmesh.bounds[1]) / 2
     center *= 100 #extra multiplication to fix center after coords get divided by 100 in scenic
 
-    dimensions = Vector(tmesh.bounding_box.extents[0],tmesh.bounding_box.extents[1],tmesh.bounding_box.extents[2])
-
     return MeshShape(tmesh), center, dimensions
-
-
-
 
 # ---------- simulator creation ----------
 simulator AirSimSimulator(timestep=globalParameters.timestep,idleStoragePos=globalParameters.idleStoragePos) 
@@ -88,7 +92,6 @@ class AirSimActor:
     assetName: None
     blueprint: None
     
-
     # override
     _shapeData: createMeshShape("assets",self.assetName)
     shape: self._shapeData[0]
@@ -129,7 +132,6 @@ if not worldInfoPath:
 else:
     worldInfoPath += "/"
     
-
 # Create prexisiting airsim objs
 prexisitingObjs = {}
 with open(
@@ -138,8 +140,10 @@ with open(
 ) as inFile:
     meshDatas = json.load(inFile)
     for meshData in meshDatas:
-
+        # print("2")
         actorName = meshData["name"]
+        if actorName == "cone_5":
+            print("ACTOR NAME: ", actorName)
         meshShape,centerOffset,dims = createMeshShape("objectMeshes",actorName)
 
         # convert unreal position to airsim position
@@ -161,7 +165,6 @@ with open(
      
 
         _addPrexistingObj(newObj)
-
 
 # generate list of assets
 assets = []

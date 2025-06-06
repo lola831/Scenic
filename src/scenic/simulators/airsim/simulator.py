@@ -205,6 +205,7 @@ class AirSimSimulation(Simulation):
             realObjName = self.client.simSpawnObject(
                 object_name=realObjName,
                 asset_name=obj.assetName,
+                # passing pose in AirSim's coordinate system (meters)
                 pose=pose,
                 scale=scenicToAirsimScale(
                     Vector(obj.width, obj.length, obj.height), obj.dims
