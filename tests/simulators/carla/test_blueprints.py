@@ -48,7 +48,8 @@ def model_blueprint(simulator, mapPath, town, modelType, modelName):
 
             model scenic.simulators.carla.model
             ego = new {modelType} with blueprint '{modelName}',
-                at (-107.52, -50.87),
+                # at (-107.52, -50.87),
+                at (-3.3, -68),
                 with regionContainedIn None
             terminate after 1 steps
         """
@@ -95,5 +96,5 @@ model_data = {
     [(type, name) for type, names in model_data.items() for name in names],
 )
 def test_model_blueprints(getCarlaSimulator, modelType, modelName):
-    simulator, town, mapPath = getCarlaSimulator("Town10HD_Opt")
+    simulator, town, mapPath = getCarlaSimulator()
     model_blueprint(simulator, mapPath, town, modelType, modelName)

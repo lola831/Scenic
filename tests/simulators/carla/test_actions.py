@@ -14,6 +14,7 @@ try:
 except ModuleNotFoundError:
     pytest.skip("carla package not installed", allow_module_level=True)
 
+from scenic.simulators.carla.blueprints import is_carla_0_10
 from tests.utils import compileScenic, sampleScene
 
 
@@ -68,7 +69,10 @@ def getCarlaSimulator(getAssetPath):
 
     base = getAssetPath("maps/CARLA")
 
-    def _getCarlaSimulator(town):
+    def _getCarlaSimulator(town=None):
+        if town is None:
+            town = "Town10HD_Opt" if is_carla_0_10 else "Town01"
+
         path = os.path.join(base, f"{town}.xodr")
         simulator = CarlaSimulator(map_path=path, carla_map=town, timeout=180)
         return simulator, town, path
@@ -80,7 +84,7 @@ def getCarlaSimulator(getAssetPath):
 
 
 def test_throttle(getCarlaSimulator):
-    simulator, town, mapPath = getCarlaSimulator("Town10HD_Opt")
+    simulator, town, mapPath = getCarlaSimulator()
     code = f"""
         param map = r'{mapPath}'
         param carla_map = '{town}'
@@ -92,7 +96,8 @@ def test_throttle(getCarlaSimulator):
             while True:
                 take SetThrottleAction(1)
 
-        ego = new Car at (-111.76, -38.33), with behavior DriveWithThrottle
+        # ego = new Car at (-111.76, -38.33), with behavior DriveWithThrottle
+        ego = new Car at (-3.3, -68), with behavior DriveWithThrottle
         record ego.speed as CarSpeed
         terminate after 5 steps
     """
@@ -104,7 +109,7 @@ def test_throttle(getCarlaSimulator):
 
 
 def test_brake(getCarlaSimulator):
-    simulator, town, mapPath = getCarlaSimulator("Town10HD_Opt")
+    simulator, town, mapPath = getCarlaSimulator()
     code = f"""
         param map = r'{mapPath}'
         param carla_map = '{town}'
@@ -124,7 +129,7 @@ def test_brake(getCarlaSimulator):
             do DriveWithThrottle() for 2 steps
             do Brake() for 6 steps
 
-        ego = new Car at (-111.76, -38.33),
+        ego = new Car at (-3.3, -68),
             with blueprint 'vehicle.nissan.patrol',
             with behavior DriveThenBrake
         record final ego.speed as CarSpeed
