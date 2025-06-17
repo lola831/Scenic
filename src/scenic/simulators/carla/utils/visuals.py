@@ -365,7 +365,7 @@ class CameraManager(object):
             array = array[:, :, :3]
             array = array[:, :, ::-1]
             self._surface = pygame.surfarray.make_surface(array.swapaxes(0, 1))
-        self.images.append(image)
+        # self.images.append(image)
 
     def destroy_sensor(self):
         if self.sensor is not None:
