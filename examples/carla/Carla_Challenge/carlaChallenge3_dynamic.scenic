@@ -15,13 +15,12 @@ model scenic.simulators.carla.model
 
 # CONSTANTS
 EGO_MODEL = "vehicle.nissan.patrol"
-EGO_SPEED = 10
+EGO_SPEED = 4
 SAFETY_DISTANCE = 10
 BRAKE_INTENSITY = 1.0
 
-PEDESTRIAN_MIN_SPEED = 1.0
-THRESHOLD = 20
-
+PEDESTRIAN_MIN_SPEED = 5.0
+THRESHOLD = 40
 # EGO BEHAVIOR: Follow lane and brake when reaches threshold distance to obstacle
 behavior EgoBehavior(speed=10):
     try:
@@ -51,10 +50,10 @@ vending_machine = new VendingMachine right of vending_spot by 3,
     with heading -90 deg relative to vending_spot.heading,
     with regionContainedIn None
 
-ego = new Car following roadDirection from spot for Range(-30, -20),
+ego = new Car following roadDirection from spot for Range(-50, -10),
     with blueprint EGO_MODEL,
     with behavior EgoBehavior(EGO_SPEED)
 
-require (distance to intersection) > 75
+require (distance to intersection) > 50
 require (ego.laneSection._slowerLane is None)
 terminate when (distance to spot) > 50
