@@ -15,12 +15,13 @@ model scenic.simulators.carla.model
 
 # CONSTANTS
 EGO_MODEL = "vehicle.nissan.patrol"
-EGO_SPEED = 4
+EGO_SPEED = 6
 SAFETY_DISTANCE = 10
 BRAKE_INTENSITY = 1.0
 
-PEDESTRIAN_MIN_SPEED = 5.0
-THRESHOLD = 40
+PEDESTRIAN_MIN_SPEED = 2.0
+THRESHOLD = 30
+
 # EGO BEHAVIOR: Follow lane and brake when reaches threshold distance to obstacle
 behavior EgoBehavior(speed=10):
     try:
@@ -33,10 +34,17 @@ behavior PedestrianBehavior(min_speed=1, threshold=10):
 
 ## DEFINING SPATIAL RELATIONS
 # Please refer to scenic/domains/driving/roads.py how to access detailed road infrastructure
-# 'network' is the 'class Network' object in roads.py
+# 'network' is the 'class Network' object in roads.py 
 
-# make sure to put '*' to uniformly randomly select from all elements of the list, 'network.lanes'
-lane = Uniform(*network.lanes)
+# collect all the curb-side lanes
+curbLanes = [
+  lg.lanes[0]
+  for lg in network.laneGroups
+  if lg is lg.road.forwardLanes
+]
+
+# make sure to put '*' to uniformly randomly select from all elements of the list
+lane = Uniform(*curbLanes)
 
 spot = new OrientedPoint on lane.centerline
 vending_spot = new OrientedPoint following roadDirection from spot for -3
@@ -50,10 +58,10 @@ vending_machine = new VendingMachine right of vending_spot by 3,
     with heading -90 deg relative to vending_spot.heading,
     with regionContainedIn None
 
-ego = new Car following roadDirection from spot for Range(-50, -10),
+ego = new Car following roadDirection from spot for Range(-30, -20),
     with blueprint EGO_MODEL,
     with behavior EgoBehavior(EGO_SPEED)
 
-require (distance to intersection) > 50
+require (distance to intersection) > 40
 require (ego.laneSection._slowerLane is None)
 terminate when (distance to spot) > 50
