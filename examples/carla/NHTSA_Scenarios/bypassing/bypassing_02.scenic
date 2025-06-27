@@ -25,10 +25,10 @@ MODEL = 'vehicle.nissan.patrol'
 
 param EGO_SPEED = VerifaiRange(2, 4)
 
-param ADV_DIST = VerifaiRange(-25, -10)
-param ADV_SPEED = VerifaiRange(7, 10)
+param ADV_DIST = VerifaiRange(-35, -25)
+param ADV_SPEED = VerifaiRange(6, 8)
 
-BYPASS_DIST = [15, 10]
+BYPASS_DIST = [25, 10]
 INIT_DIST = 50
 TERM_TIME = 5
 

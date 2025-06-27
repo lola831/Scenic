@@ -24,17 +24,17 @@ model scenic.simulators.carla.model
 
 MODEL = 'vehicle.nissan.patrol'
 
-param EGO_INIT_DIST = VerifaiRange(10, 15)
+param EGO_INIT_DIST = VerifaiRange(18, 20)
 param EGO_SPEED = VerifaiRange(7, 10)
 param EGO_BRAKE = VerifaiRange(0.5, 1.0)
 
 STAT_INIT_DIST = [0, 5]
 
 ADV_INIT_DIST = [15, 20]
-ADV_SPEED = 10
+ADV_SPEED = 12
 
 BYPASS_DIST = 8
-TERM_DIST = 70
+TERM_DIST = 40
 
 #################################
 # AGENT BEHAVIORS               #

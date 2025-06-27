@@ -25,13 +25,13 @@ MODEL = 'vehicle.nissan.patrol'
 
 param EGO_SPEED = VerifaiRange(6, 8)
 
-param ADV1_DIST = VerifaiRange(20, 25)
-param ADV2_DIST = globalParameters.ADV1_DIST + VerifaiRange(15, 20)
+param ADV1_DIST = VerifaiRange(25, 30)
+param ADV2_DIST = globalParameters.ADV1_DIST + VerifaiRange(25, 30)
 param ADV_SPEED = VerifaiRange(2, 4)
 
 BYPASS_DIST = 15
 INIT_DIST = 50
-TERM_DIST = globalParameters.ADV2_DIST + 15
+TERM_DIST = globalParameters.ADV2_DIST + 25
 
 #################################
 # AGENT BEHAVIORS               #
