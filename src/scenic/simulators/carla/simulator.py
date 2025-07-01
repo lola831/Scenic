@@ -47,7 +47,6 @@ class CarlaSimulator(DrivingSimulator):
         verbosePrint(f"Connecting to CARLA on port {port}")
         self.client = carla.Client(address, port)
         self.client.set_timeout(timeout)  # limits networking operations (seconds)
-        print("CARLA SERVER VERSION: ", self.client.get_server_version())
         if carla_map is not None:
             try:
                 self.world = self.client.load_world(carla_map)

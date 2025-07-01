@@ -236,10 +236,8 @@ class Pedestrian(Pedestrian, CarlaActor, Walks, _CarlaPedestrian):
 
     def setWalkingSpeed(self, speed):
         if blueprints.is_carla_0_10:
-            print("CARLA WALKER SPEED INCREASE!!!!!!")
             speed *= 3.6
         if blueprints.carla_pkg_version == "0.9.15":
-            print("CARLA WALKER SLOW SPEED!!!!!")
             speed /= 10
         self.control.speed = speed
 

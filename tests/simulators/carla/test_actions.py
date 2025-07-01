@@ -96,7 +96,6 @@ def test_throttle(getCarlaSimulator):
             while True:
                 take SetThrottleAction(1)
 
-        # ego = new Car at (-111.76, -38.33), with behavior DriveWithThrottle
         ego = new Car at (-3.3, -68), with behavior DriveWithThrottle
         record ego.speed as CarSpeed
         terminate after 5 steps
