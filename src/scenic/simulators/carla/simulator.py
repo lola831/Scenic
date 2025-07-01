@@ -49,7 +49,9 @@ class CarlaSimulator(DrivingSimulator):
         self.client.set_timeout(timeout)  # limits networking operations (seconds)
         if carla_map is not None:
             try:
-                self.world = self.client.load_world(carla_map)
+                # self.world = self.client.load_world(carla_map)
+                self.world = self.client.get_world()
+                # print("CUREENT CARLA MAP: ", self.world.get_map().name)
             except Exception as e:
                 raise RuntimeError(f"CARLA could not load world '{carla_map}'") from e
         else:
@@ -181,6 +183,7 @@ class CarlaSimulation(DrivingSimulation):
 
     def createObjectInSimulator(self, obj):
         # Extract blueprint
+        print("TRYING TO CREATE: ", obj.blueprint)
         try:
             blueprint = self.blueprintLib.find(obj.blueprint)
 
@@ -231,8 +234,26 @@ class CarlaSimulation(DrivingSimulation):
         # Create Carla actor
         carlaActor = self.world.try_spawn_actor(blueprint, transform)
         if carlaActor is None:
+            print("FAILED TO CREATE: ", obj.blueprint)
             raise SimulationCreationError(f"Unable to spawn object {obj}")
         obj.carlaActor = carlaActor
+
+        self.world.tick()
+
+        print("SUCCESFULLY CREATED: ", obj.blueprint, obj.carlaActor.id)
+
+        actor_list = self.world.get_actors()
+        print("number of actors in carla: ", len(actor_list))
+        # for actor in actor_list:
+        #     print(actor)
+        print("=== Vehicles ===")
+        for vehicle in actor_list.filter('vehicle.*'):
+            print(f"Vehicle id={vehicle.id}, type={vehicle.type_id}")
+
+        # Print all pedestrians
+        print("=== Pedestrians ===")
+        for ped in actor_list.filter('walker.pedestrian.*'):
+            print(f"Pedestrian id={ped.id}")
 
         carlaActor.set_simulate_physics(obj.physics)
 
@@ -311,6 +332,20 @@ class CarlaSimulation(DrivingSimulation):
         return values
 
     def destroy(self):
+        # self.world.tick()
+        print("IN DESTROY--------")
+        actor_list = self.world.get_actors()
+        print("number of actors in carla: ", len(actor_list))
+        print("=== Vehicles ===")
+        for vehicle in actor_list.filter('vehicle.*'):
+            print(f"Vehicle id={vehicle.id}, type={vehicle.type_id}")
+
+        # Print all pedestrians
+        print("=== Pedestrians ===")
+        for ped in actor_list.filter('walker.pedestrian.*'):
+            print(f"Pedestrian id={ped.id}")
+        
+        
         for obj in self.objects:
             if obj.carlaActor is not None:
                 if isinstance(obj.carlaActor, carla.Vehicle):
@@ -318,11 +353,16 @@ class CarlaSimulation(DrivingSimulation):
                 if isinstance(obj.carlaActor, carla.Walker):
                     obj.carlaController.stop()
                     obj.carlaController.destroy()
-                obj.carlaActor.destroy()
+                destroyed = obj.carlaActor.destroy()
+                print("trying to destroy: ", obj.blueprint, obj.carlaActor.id)
+                print("actor destroyed?: ", destroyed)
+               
+
         if self.render and self.cameraManager:
             self.cameraManager.destroy_sensor()
 
         self.client.stop_recorder()
+        print("END DESTROY--------------")
 
         self.world.tick()
         super().destroy()

@@ -8,19 +8,19 @@ model scenic.simulators.carla.model
 param carla_map = "Town10HD_Opt"
 param time_step = 1.0/10
 
-behavior DriveFullThrottle():
+behavior CrossStreet():
     while True:
-        take SetThrottleAction(1)
+        take SetWalkingDirectionAction(self.heading), SetWalkingSpeedAction(1)
 
-ego = new Car at (-42, -137),
-    with behavior DriveFullThrottle,
-    with blueprint "vehicle.nissan.patrol"
+ego = new Car at (-42, -137)
 
+ped = new Pedestrian at (-35, -145.30), with regionContainedIn None,
+    with heading ego.heading + 90 deg,
+    with behavior CrossStreet()
 
-record initial ego.position as StartPos
-record final   ego.position as EndPos
-record final ego.speed as CarSpeed
-# record ego.speed as SpeedLog 
+record initial ped.position as StartPos
+record final   ped.position as EndPos
+record final ped.speed as PedSpeed
 terminate after 8 seconds
 """
 
@@ -34,8 +34,8 @@ simulator = CarlaSimulator(
 simulation = simulator.simulate(scene,)
 
 records   = simulation.result.records
-print("FINAL SPEED: ", records["CarSpeed"])
-# print("SPEED LOG: ", records["SpeedLog"])
+print("FINAL SPEED: ", records["PedSpeed"])
+
 
 start_pos = records['StartPos']  
 end_pos   = records['EndPos']     
