@@ -49,9 +49,9 @@ class CarlaSimulator(DrivingSimulator):
         self.client.set_timeout(timeout)  # limits networking operations (seconds)
         if carla_map is not None:
             try:
-                # self.world = self.client.load_world(carla_map)
-                self.world = self.client.get_world()
-                # print("CUREENT CARLA MAP: ", self.world.get_map().name)
+                self.world = self.client.load_world(carla_map)
+                # self.world = self.client.get_world()
+                # print("CURRENT CARLA MAP: ", self.world.get_map().name)
             except Exception as e:
                 raise RuntimeError(f"CARLA could not load world '{carla_map}'") from e
         else:
@@ -238,7 +238,8 @@ class CarlaSimulation(DrivingSimulation):
             raise SimulationCreationError(f"Unable to spawn object {obj}")
         obj.carlaActor = carlaActor
 
-        self.world.tick()
+        # Tick so CARLA registers the new actor immediately, allowing destroy() to clean it up if the scenario aborts.
+        # self.world.tick()
 
         print("SUCCESFULLY CREATED: ", obj.blueprint, obj.carlaActor.id)
 
@@ -332,7 +333,7 @@ class CarlaSimulation(DrivingSimulation):
         return values
 
     def destroy(self):
-        # self.world.tick()
+        self.world.tick()
         print("IN DESTROY--------")
         actor_list = self.world.get_actors()
         print("number of actors in carla: ", len(actor_list))

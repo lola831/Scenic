@@ -26,9 +26,11 @@ terminate after 8 seconds
 
 scenario = scenic.scenarioFromString(code, mode2D=True)
 scene, _ = scenario.generate()
+#simulator = scenario.getSimulator()
 simulator = CarlaSimulator(
     carla_map="Town10HD_Opt", 
     map_path="assets/maps/CARLA/Town10HD_Opt.xodr",
+    timeout=60,
 )
 # simulation = simulator.simulate(scene, maxSteps=10)
 simulation = simulator.simulate(scene,)
