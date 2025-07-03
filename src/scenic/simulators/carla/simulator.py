@@ -37,7 +37,7 @@ class CarlaSimulator(DrivingSimulator):
         map_path,
         address="127.0.0.1",
         port=2000,
-        timeout=10,
+        timeout=60,
         render=True,
         record="",
         timestep=0.1,
@@ -238,9 +238,6 @@ class CarlaSimulation(DrivingSimulation):
             raise SimulationCreationError(f"Unable to spawn object {obj}")
         obj.carlaActor = carlaActor
 
-        # Tick so CARLA registers the new actor immediately, allowing destroy() to clean it up if the scenario aborts.
-        # self.world.tick()
-
         print("SUCCESFULLY CREATED: ", obj.blueprint, obj.carlaActor.id)
 
         actor_list = self.world.get_actors()
@@ -333,6 +330,7 @@ class CarlaSimulation(DrivingSimulation):
         return values
 
     def destroy(self):
+        # Tick once so CARLA registers any pending spawns, allowing destroy() to clean them up after a partial spawn failure.
         self.world.tick()
         print("IN DESTROY--------")
         actor_list = self.world.get_actors()
