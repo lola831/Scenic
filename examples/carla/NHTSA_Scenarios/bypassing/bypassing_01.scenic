@@ -28,7 +28,7 @@ param EGO_SPEED = VerifaiRange(7, 10)
 param ADV_DIST = VerifaiRange(10, 25)
 param ADV_SPEED = VerifaiRange(2, 4)
 
-BYPASS_DIST = [15, 10]
+BYPASS_DIST = [20, 15]
 INIT_DIST = 50
 TERM_TIME = 5
 
@@ -64,7 +64,7 @@ egoSpawnPt = new OrientedPoint in initLane.centerline
 
 #################################
 # SCENARIO SPECIFICATION        #
-#################################
+
 
 ego = new Car at egoSpawnPt,
     with blueprint MODEL,

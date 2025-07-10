@@ -47,7 +47,7 @@ class CarlaSimulator(DrivingSimulator):
         verbosePrint(f"Connecting to CARLA on port {port}")
         self.client = carla.Client(address, port)
         self.client.set_timeout(timeout)  # limits networking operations (seconds)
-        print("CARLA SERVER VERSION: ", self.client.get_server_version())
+        # print("CARLA SERVER VERSION: ", self.client.get_server_version())
         if carla_map is not None:
             try:
                 self.world = self.client.load_world(carla_map)
@@ -235,6 +235,9 @@ class CarlaSimulation(DrivingSimulation):
             raise SimulationCreationError(f"Unable to spawn object {obj}")
         obj.carlaActor = carlaActor
 
+        # Tick so CARLA registers the new actor immediately, allowing destroy() to clean it up if the scenario aborts.
+        self.world.tick()
+
         carlaActor.set_simulate_physics(obj.physics)
 
         if isinstance(carlaActor, carla.Vehicle):
@@ -312,6 +315,8 @@ class CarlaSimulation(DrivingSimulation):
         return values
 
     def destroy(self):
+        self.world.tick()
+        
         for obj in self.objects:
             if obj.carlaActor is not None:
                 if isinstance(obj.carlaActor, carla.Vehicle):
