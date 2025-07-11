@@ -4,7 +4,7 @@ The car ahead of ego that is badly parked over the sidewalk cuts into ego vehicl
 This scenario may fail if there exists any obstacle (e.g. fences) on the sidewalk
 
 To run this file using the Carla simulator:
-    scenic examples/carla/NHTSA_Scenarios/OAS_Scenarios/oas_scenario_06.scenic --2d --model scenic.simulators.carla.model --simulate
+    scenic examples/carla/OAS_Scenarios/oas_scenario_06.scenic --2d --model scenic.simulators.carla.model --simulate
 """
 
 

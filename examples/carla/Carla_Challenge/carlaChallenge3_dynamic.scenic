@@ -15,12 +15,12 @@ model scenic.simulators.carla.model
 
 # CONSTANTS
 EGO_MODEL = "vehicle.nissan.patrol"
-EGO_SPEED = 6
+EGO_SPEED = 10
 SAFETY_DISTANCE = 10
 BRAKE_INTENSITY = 1.0
 
-PEDESTRIAN_MIN_SPEED = 2.0
-THRESHOLD = 30
+PEDESTRIAN_MIN_SPEED = 1.0
+THRESHOLD = 20
 
 # EGO BEHAVIOR: Follow lane and brake when reaches threshold distance to obstacle
 behavior EgoBehavior(speed=10):
