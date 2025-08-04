@@ -1,0 +1,31 @@
+name: sync_issues_with_jira
+on:
+  issues:
+    types: [opened]
+
+permissions: {}
+
+jobs:
+    generate-issue-link:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Get issue details
+            id: get_issue_details
+            uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+            with:
+              github-token: ${{ github.token }}
+              script: |
+                const repoName = context.payload.repository.full_name;
+                const issueNumber = context.payload.issue.number;
+                const issueTitle = context.payload.issue.title;
+                const issueLink = `https://github.com/${repoName}/issues/${issueNumber}`;
+                core.setOutput('issueTitle', issueTitle);
+                core.setOutput('issueLink', issueLink);
+
+          - name: print extracted info
+            env:
+                ISSUE_TITLE: ${{ steps.get_issue_details.outputs.issueTitle }}
+                ISSUE_LINK: ${{ steps.get_issue_details.outputs.issueLink }}
+            run: |
+                echo "Issue Title: $ISSUE_TITLE"
+                echo "Issue Link: $ISSUE_LINK"
